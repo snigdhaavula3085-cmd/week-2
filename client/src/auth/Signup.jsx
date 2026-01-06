@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 function Signup() {
   const [n, setN] = useState("");
   const [e, setE] = useState("");
   const [p, setP] = useState("");
+
+  const navigate = useNavigate();
 
   async function submitHandeler() {
     const obj = {
@@ -21,9 +24,15 @@ function Signup() {
         body: JSON.stringify(obj),
       });
 
-      const data = await response.text();
-      console.log("Response:", data);
+      if (!response.ok) {
+        throw new Error("Signup failed");
+      }
+
       alert("Signup successful");
+
+      // ✅ Navigate to login page
+      navigate("/login");
+
     } catch (error) {
       console.error("Error:", error);
       alert("Signup failed");
@@ -57,9 +66,12 @@ function Signup() {
 
       <button onClick={submitHandeler}>Submit</button>
 
-      <h4>name : {n}</h4>
-      <h4>email : {e}</h4>
-      <h4>password : {p}</h4>
+      <br /><br />
+
+      {/* ✅ Manual link to login */}
+      <p>
+        Already have an account? <Link to="/login">Login</Link>
+      </p>
     </div>
   );
 }
