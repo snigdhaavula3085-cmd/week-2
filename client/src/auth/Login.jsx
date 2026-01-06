@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const [e, setE] = useState("");
   const [p, setP] = useState("");
+
+  const navigate = useNavigate();
 
   async function submitHandler() {
     const obj = {
@@ -20,9 +22,18 @@ function Login() {
         body: JSON.stringify(obj),
       });
 
-      const data = await response.text(); // plain text response
+      const data = await response.text();
       console.log("Response:", data);
-      alert(data); // show backend message
+
+      if (!response.ok) {
+        throw new Error(data);
+      }
+
+      alert(data);
+
+
+      navigate("/admin");
+
     } catch (error) {
       console.error("Error:", error);
       alert("Login failed");
@@ -45,11 +56,14 @@ function Login() {
         placeholder="password"
         onChange={(e) => setP(e.target.value)}
       />
-      <br />
-      <br />
+      <br /><br />
 
       <button onClick={submitHandler}>Login</button>
-      <Link></Link>
+
+      <br /><br />
+
+     
+      <Link to="/signup">Go to Signup Page</Link>
 
       <h4>email : {e}</h4>
       <h4>password : {p}</h4>
