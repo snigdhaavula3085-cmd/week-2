@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.*;
 import com.example.myapp.dto.LoginRequest;
 import com.example.myapp.dto.SignupRequest;
 import com.example.myapp.model.User;
@@ -44,6 +44,13 @@ public class AuthController {
         }
 
         return "Login successful";
+    }
+
+    @GetMapping("/data")
+    List<User> getData() {
+
+        return db.findAll();
+
     }
 
 }
