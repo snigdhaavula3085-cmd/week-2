@@ -66,6 +66,7 @@ public class AuthController {
         User updatedUser=op.get();
         updatedUser.setName(sd.getName());
         updatedUser.setEmail(sd.getEmail());
+        updatedUser.setPassword(sd.getPassword());
         db.save(updatedUser);
         return "user updated successfully";
     }
